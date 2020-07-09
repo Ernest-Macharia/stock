@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% if messages %}
+        <ul class="messages">
+               {% for message in messages %}
+                     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+               {% endfor %}
+       </ul>
+  {% endif %}
+<div class="display_table">
+	<h1 class="reg">{{title}}</h1>
+	<form method='POST' action=''>{% csrf_token %}
+    {{form|crispy}}
+        <input type="submit" value='Search' class="btn btn-success" />
+</form>
+<br>
+	<table class='table'>
+
+        <thead>
+          <tr>
+            <th>COUNT</th>
+            <th>CATEGORY</th>
+            <th>ITEM NAME</th>
+            <th>QUANTITY IN STORE</th>
+            <th>TIMESTAMP</th>
+            <th>LAST UPDATED</th>
+            <th>DELETE</th>
+          </tr>
+        </thead>
+      {% for instance in queryset %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{instance.category}}</td>
+            <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</td>
+            <td>{{instance.quantity}}</td>
+            <td>{{instance.timestamp}}</td>
+            <td>{{instance.last_updated}}</td>
+            <td><a href="{% url 'delete_items' instance.id %}"><img src="{% static 'img/delete1.png' %}"></a></td>
+          </tr>
+      {% endfor %}
+    </table>
+</div>
+
+
+{% endblock %}
+	
+
