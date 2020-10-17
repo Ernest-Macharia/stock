@@ -1,10 +1,14 @@
 /*Align the title to the center of the page*/
+body {
+	background: grey;
+}
 .table{
 	font-size: 13px;
 	text-align: center;
 	width: 95%;
 	margin: auto;
 	text-align: center;
+	
 }
 
 /*Make alternating colors for the table rows*/

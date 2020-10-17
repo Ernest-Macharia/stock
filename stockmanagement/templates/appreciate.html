@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+	<div>
+          <h1 class="reg">{{title}}</h1>        <style>
+         body {
+         	background-color: #FAEBD7;
+         }
+
+       </style>      
+    <div class="row">
+    	<div class="col-sm-6">
+    		<div class="display_table">
+	<form method='POST' action=''>{% csrf_token %}
+		{{form|crispy}}
+        <input type="submit" value='Calculate' class="btn btn-success"/>
+    </form>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

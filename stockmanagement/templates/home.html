@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-                        
+       <style>
+         body {
+         	background-color: #FAEBD7;
+         }
 
-	
-		<h1>{{title}}</h1>
+       </style>                 
+	<img src="{%static '/img/stock2.jpg' %}" style="width: 100%; height: 100%; ">
+    </div>
+		
     
-    <a class="btn btn-lg btn-primary" href="/docs/4.5/components/navbar/" role="button">View navbar docs &raquo;</a>
-      
-
+   
 {% endblock %}

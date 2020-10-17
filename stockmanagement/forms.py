@@ -1,9 +1,9 @@
 from django import forms
-from .models import Stock
+from .models import Stock,Appreciate,Depreciate
 class StockCreateForm(forms.ModelForm):
 	class Meta:
 		model = Stock
-		fields = ['category','item_name','quantity']
+		fields = ['category','department', 'item_name','quantity']
 
 	def clean_category(self):
 		category = self.cleaned_data.get('category')
@@ -26,7 +26,7 @@ class StockCreateForm(forms.ModelForm):
 class StockUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Stock
-		fields = ['category', 'item_name', 'quantity']
+		fields = ['category', 'department','item_name', 'quantity']
 
        
 
@@ -35,4 +35,34 @@ class StockSearchForm(forms.ModelForm):
 	class Meta:
 		model = Stock
 		fields = ['category', 'item_name']
-                                                
+
+class IssueForm(forms.ModelForm):
+	class Meta:
+		model = Stock 
+		fields = ['issue_quantity', 'issue_to']
+
+class ReceiveForm(forms.ModelForm):
+    class Meta:
+    	model = Stock
+    	fields = ['receive_quantity','receive_by']
+    	
+
+class ReorderLevelForm(forms.ModelForm):
+    class Meta:
+        model = Stock
+        fields = ['reorder_level']
+
+class AppreciationForm(forms.ModelForm):
+    class Meta:
+        model = Appreciate
+        exclude = []
+
+class DepreciationForm(forms.ModelForm):
+    class Meta:
+        model = Depreciate
+        exclude = []
+                               
+class MaintenanceForm(forms.ModelForm):
+    class Meta:
+        model = Stock
+        fields = ['months']                                                

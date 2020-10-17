@@ -4,45 +4,108 @@
 {% load crispy_forms_tags %}
 
 {% if messages %}
+
         <ul class="messages">
                {% for message in messages %}
                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                {% endfor %}
        </ul>
   {% endif %}
+
 <div class="display_table">
 	<h1 class="reg">{{title}}</h1>
+  <style>
+         body {
+          background-color: #FAEBD7;
+
+         }
+         .table{
+          font-weight: bold;
+          font-size: 17px;
+         }
+
+       </style>
+  <div class="row">
+    <div class="col-sm-2">
 	<form method='POST' action=''>{% csrf_token %}
     {{form|crispy}}
-        <input type="submit" value='Search' class="btn btn-success" />
+    <input type="submit" value='Search' class="btn btn-success my_button"/>
 </form>
 <br>
+<a href="{% url 'add_items' %}">
+  <div class="btn btn-primary my_button">Add Item</div></a>
+</div>
+<br>
+<div class="col-sm-10">
 	<table class='table'>
 
         <thead>
           <tr>
-            <th>COUNT</th>
+            <!--<th>COUNT</th>-->
             <th>CATEGORY</th>
+            <th>DEPARTMENT</th>
             <th>ITEM NAME</th>
             <th>QUANTITY IN STORE</th>
-            <th>TIMESTAMP</th>
+            <th>REORDER LEVEL</th>
+            <!--<th>TIMESTAMP></th-->
             <th>LAST UPDATED</th>
+
             <th>DELETE</th>
+            
+            <th>APPRECIATION </th> 
+            <th>DEPRECIATION</th>
+            <th>MAINTENANCE DATES</th>
           </tr>
         </thead>
       {% for instance in queryset %}
           <tr>
-            <td>{{forloop.counter}}</td>
+            <!--<td>{{forloop.counter}}</td>-->
             <td>{{instance.category}}</td>
-            <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</td>
-            <td>{{instance.quantity}}</td>
-            <td>{{instance.timestamp}}</td>
+            <td>{{instance.department}}</td>
+            <td><a href="{% url 'update_items' instance.id %}">{{instance.item_name}}</a></td>
+            
+      <td>{% if instance.quantity <= instance.reorder_level %}
+          <div style="background-color: red;">
+            <a href="{% url 'stock_detail' instance.id %}">{{instance.quantity}}</a></div>
+          {% else %}{{instance.quantity}}
+  {% endif %} 
+          
+        </td>
+            <td><a href="{% url 'reorder_level' instance.id %}">{{instance.reorder_level}}</a></td>
+            
             <td>{{instance.last_updated}}</td>
+            <!--<td>{{instance.timestamp}}</td>-->
             <td><a href="{% url 'delete_items' instance.id %}"><img src="{% static 'img/delete1.png' %}"></a></td>
-          </tr>
+            <td>
+            <div class="radio">
+                     <label><input type="radio" id='regular' name="optradio"></label>
+                     <a href="{% url 'appreciate' %}">
+                     <input type="submit" value='Calculate' class="btn btn-success"/></a>
+                 </div>
+            
+            <td><div class="radio">
+                     <label><input type="radio" id='regular' name="optradio"></label><a href="{% url 'depreciate' %}"><input type="submit" value='Calculate' class="btn btn-success"/></a>
+                 </div></td>
+
+                 <td><a href="{% url 'maintenance_dates' instance.id %}"><input type="submit" value='maintenance' class="btn btn-success"/>{{instance.maintenance_dates}}</a></td>
+            
+
+            
+          
+          
+        </tr>
+          
       {% endfor %}
     </table>
+    
+    
+    <script src="{% static '/js/pager/paging.js' %}"></script>
+  <script src="{% static 'js/myjs.js' %}"></script>
+    
 </div>
+</div>
+</div>
+
 
 
 {% endblock %}
